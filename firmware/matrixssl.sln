@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "matrixsslTest", "matrixssl\test\matrixTest.vcxproj", "{ACA98D83-41AD-4615-AB64-5007EF5652D1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "matrixssl", "matrixssl.vcxproj", "{873E8688-FE14-4481-ABB7-929149D96DC2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "matrixsslclient", "apps\matrixsslclient.vcxproj", "{0E4B82C9-43F9-426F-AB2F-418D8BA4F270}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "matrixsslserver", "apps\matrixsslserver.vcxproj", "{E81FC2D4-3BB8-449B-85DC-3202838AEBF0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACA98D83-41AD-4615-AB64-5007EF5652D1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ACA98D83-41AD-4615-AB64-5007EF5652D1}.Debug|Win32.Build.0 = Debug|Win32
+		{ACA98D83-41AD-4615-AB64-5007EF5652D1}.Release|Win32.ActiveCfg = Release|Win32
+		{ACA98D83-41AD-4615-AB64-5007EF5652D1}.Release|Win32.Build.0 = Release|Win32
+		{873E8688-FE14-4481-ABB7-929149D96DC2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{873E8688-FE14-4481-ABB7-929149D96DC2}.Debug|Win32.Build.0 = Debug|Win32
+		{873E8688-FE14-4481-ABB7-929149D96DC2}.Release|Win32.ActiveCfg = Release|Win32
+		{873E8688-FE14-4481-ABB7-929149D96DC2}.Release|Win32.Build.0 = Release|Win32
+		{0E4B82C9-43F9-426F-AB2F-418D8BA4F270}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0E4B82C9-43F9-426F-AB2F-418D8BA4F270}.Debug|Win32.Build.0 = Debug|Win32
+		{0E4B82C9-43F9-426F-AB2F-418D8BA4F270}.Release|Win32.ActiveCfg = Release|Win32
+		{0E4B82C9-43F9-426F-AB2F-418D8BA4F270}.Release|Win32.Build.0 = Release|Win32
+		{E81FC2D4-3BB8-449B-85DC-3202838AEBF0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E81FC2D4-3BB8-449B-85DC-3202838AEBF0}.Debug|Win32.Build.0 = Debug|Win32
+		{E81FC2D4-3BB8-449B-85DC-3202838AEBF0}.Release|Win32.ActiveCfg = Release|Win32
+		{E81FC2D4-3BB8-449B-85DC-3202838AEBF0}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
