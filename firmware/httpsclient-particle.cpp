@@ -11,9 +11,9 @@
 
 #include "httpsclient-particle.h"
 #ifdef ID_RSA
-#include "sampleCerts/RSA/2048_RSA.h"
-#include "sampleCerts/RSA/2048_RSA_KEY.h"
-#include "sampleCerts/RSA/ALL_RSA_CAS.h"
+#include "2048_RSA.h"
+#include "2048_RSA_KEY.h"
+#include "ALL_RSA_CAS.h"
 #endif
 
 uint32_t freemem;
