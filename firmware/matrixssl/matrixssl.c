@@ -1002,6 +1002,12 @@ int32 matrixSslLoadDhParamsMem(sslKeys_t *keys,  const unsigned char *dhBin,
 	to minimize memory usage with multiple simultaneous requests.  They must
 	not be deleted by caller until all server contexts using them are deleted.
 */
+// httpsclient EDIT:
+// Converting some buffers and data structures to static
+static ssl_t LSSL;
+static unsigned char OUTBUF[SSL_DEFAULT_OUT_BUF_SIZE];
+static unsigned char INBUF[SSL_DEFAULT_IN_BUF_SIZE];
+
 int32 matrixSslNewSession(ssl_t **ssl, const sslKeys_t *keys,
 					sslSessionId_t *session, sslSessOpts_t *options)
 {
@@ -1069,8 +1075,9 @@ int32 matrixSslNewSession(ssl_t **ssl, const sslKeys_t *keys,
 	}
 #endif
 
-
-	lssl = psMalloc(pool, sizeof(ssl_t));
+	// httpsclient EDIT:
+	//lssl = psMalloc(pool, sizeof(ssl_t));
+	lssl = &LSSL;
 	if (lssl == NULL) {
 		psTraceInfo("Out of memory for ssl_t in matrixSslNewSession\n");
 		return PS_MEM_FAIL;
@@ -1099,7 +1106,9 @@ int32 matrixSslNewSession(ssl_t **ssl, const sslKeys_t *keys,
 	lssl->outsize = SSL_DEFAULT_OUT_BUF_SIZE;
 
 	/* Standard software implementation */
-	lssl->outbuf = psMalloc(lssl->bufferPool, lssl->outsize);
+	// httpsclient EDIT:
+	// lssl->outbuf = psMalloc(lssl->bufferPool, lssl->outsize);
+	lssl->outbuf = OUTBUF;
 
 	if (lssl->outbuf == NULL) {
 		psTraceInfo("Buffer pool is too small\n");
@@ -1107,7 +1116,9 @@ int32 matrixSslNewSession(ssl_t **ssl, const sslKeys_t *keys,
 		return PS_MEM_FAIL;
 	}
 	lssl->insize = SSL_DEFAULT_IN_BUF_SIZE;
-	lssl->inbuf = psMalloc(lssl->bufferPool, lssl->insize);
+	// httpsclient EDIT:
+	// lssl->inbuf = psMalloc(lssl->bufferPool, lssl->insize);
+	lssl->inbuf = INBUF;
 	if (lssl->inbuf == NULL) {
 		psTraceInfo("Buffer pool is too small\n");
 		psFree(lssl->outbuf, lssl->bufferPool);

@@ -31,6 +31,9 @@
  *	http://www.gnu.org/copyleft/gpl.html
  */
 /******************************************************************************/
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifndef _h_PS_COREAPI
 #define _h_PS_COREAPI
@@ -175,3 +178,6 @@ extern void psFreeList(psList_t *list, psPool_t *pool);
 #endif /* _h_PS_COREAPI */
 /******************************************************************************/
 
+#ifdef __cplusplus
+}
+#endif

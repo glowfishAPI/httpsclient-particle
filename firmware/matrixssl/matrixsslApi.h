@@ -41,8 +41,8 @@
 extern "C" {
 #endif
 
-#include "core/coreApi.h"
-#include "crypto/cryptoApi.h"
+#include "../core/coreApi.h"
+#include "../crypto/cryptoApi.h"
 
 #include "matrixsslConfig.h"
 #include "matrixssllib.h"

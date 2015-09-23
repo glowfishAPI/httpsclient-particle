@@ -167,7 +167,8 @@ extern "C" {
 	Compile time support for server or client side SSL
 */
 #define USE_CLIENT_SIDE_SSL
-#define USE_SERVER_SIDE_SSL
+  // httpsclient EDIT: Remove Server side SSL
+/* #define USE_SERVER_SIDE_SSL */
 
 /******************************************************************************/
 /*
@@ -200,7 +201,9 @@ extern "C" {
 
 	SSL_DEFAULT_X_BUF_SIZE	value in bytes, maximum SSL_MAX_BUF_SIZE
  */
-#define	SSL_DEFAULT_IN_BUF_SIZE		1500		/* Baseline recv buf size */
+  // httpsclient EDIT: 1500 - 6000, Avoid realloc in case of inbuf exceeding size
+  // This happens because the server certificate chains are usually damn long!!!
+#define	SSL_DEFAULT_IN_BUF_SIZE		6000		/* Baseline recv buf size */  
 #define	SSL_DEFAULT_OUT_BUF_SIZE	1500		/* Baseline send buf size */
 
 /******************************************************************************/

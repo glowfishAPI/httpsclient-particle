@@ -32,8 +32,20 @@
  */
 /******************************************************************************/
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef _h_PS_PLATFORM
 #define _h_PS_PLATFORM
+
+// httpsclient EDIT:
+#define METAL
+
+// httpsclient EDIT: There is an autodetect for this below with
+//                   __SIZEOF_LONG_LONG__ detection. Didn't see this in the
+//                   photon compiler flags
+#define HAVE_NATIVE_INT64
 
 /******************************************************************************/
 /*
@@ -233,7 +245,10 @@ extern errno_t memset_s(void *s, rsize_t smax, int c, rsize_t n);
 	Hardware Abstraction Layer
 */
 /* Hardware Abstraction Layer - define functions in HAL directory */
-#if defined(POSIX) || defined(WIN32) || defined(ECOS) || defined(FREERTOS)
+// httpsclient EDIT: Adding METAL here, as halOpen, Close, Alert nowhere to
+//                   be found
+#if (defined(POSIX) || defined(WIN32) || defined(ECOS) || defined(FREERTOS) || \
+     defined(METAL))
  #define halOpen() 0
  #define halClose()
  #define halAlert()
@@ -365,4 +380,6 @@ extern int32 osdepMutexClose(void);
 
 #endif /* !PS_UNSUPPORTED_OS */
 #endif /* _h_PS_PLATFORM */
-
+#ifdef __cplusplus
+}
+#endif

@@ -35,7 +35,7 @@
 #ifndef _h_PS_CRYPTOAPI
 #define _h_PS_CRYPTOAPI
 
-#include "core/coreApi.h" /* Must be first included */
+#include "../core/coreApi.h" /* Must be first included */
 #include "cryptoConfig.h" /* Must be second included */
 #include "cryptolib.h"
 
