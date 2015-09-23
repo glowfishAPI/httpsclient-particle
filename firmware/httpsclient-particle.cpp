@@ -208,9 +208,8 @@ static int32 certCb(ssl_t *ssl, psX509Cert_t *cert, int32 alert) {
   */
   if (alert == SSL_ALERT_CERTIFICATE_UNKNOWN) {
     //ssl->expectedName not found in cert subject names
-    #ifdef LOGGING_DEBUG
-    Serial.println("ERROR: expectedName not found in cert subject names");
-    #endif
+    if (g_https_trace)
+      Serial.println("ERROR: expectedName not found in cert subject names");
   }
 
   if (alert == SSL_ALERT_CERTIFICATE_EXPIRED) {
