@@ -16,10 +16,10 @@ Any feedback (especially critical) and contributions are welcome!
 # Building it with spark firmware
 
 Assuming you are comfortable using this library: https://github.com/spark/firmware
-1. Clone the httpsclient-particle
-2. Copy the contents of the firmware directory into the above firmware/user/src/ directory of the spark firmware library.
-3. Pick one of the files in the examples directory. And copy it into user/src directory.
-4. Goto firmware/main/ of the spark firmware directory again. And build it (Again, instructions for this are at https://github.com/spark/firmware)
+- Clone the httpsclient-particle
+- Copy the contents of the firmware directory into the above firmware/user/src/ directory of the spark firmware library.
+- Pick one of the files in the examples directory. And copy it into user/src directory.
+- Goto firmware/main/ of the spark firmware directory again. And build it (Again, instructions for this are at https://github.com/spark/firmware)
 
 # Current State
 What's here, is a semi-stable working httpsclient that can make requests from
