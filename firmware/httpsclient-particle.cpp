@@ -32,7 +32,9 @@ sslSessOpts_t options;
 const int g_key_len = 2048;
 uint32 g_cipher[1] = {60};
 const int g_ciphers = 1;
-const uint16_t TIMEOUT = 1000; // Allow maximum 1s between data packets(?)
+// INFO: Turns out it's a huge deal to make this >= 3000.
+//       The TCPClient really does take >2000ms to give us a packet for some reason?!!
+const uint16_t TIMEOUT = 4000;
 unsigned char * g_httpRequestHdr;
 const char end_header[] = "\r\n\r\n";
 
@@ -44,33 +46,10 @@ uint32 g_bytes_requested = 100000;
 int32 loadRsaKeys(uint32 key_len, sslKeys_t *keys,
 			 unsigned char *CAstream, int32 CAstreamLen) {
   int32 rc;
+// INFO: 2048 is just good enough for now
   if (g_https_trace) Serial.println("Using 2048 bit RSA private key");
   rc = matrixSslLoadRsaKeysMem(keys, RSA2048, sizeof(RSA2048), RSA2048KEY,
 			       sizeof(RSA2048KEY), CAstream, CAstreamLen);
-
-//   if (key_len == 1024) {
-// #ifdef LOGGING_DEBUG
-//     Serial.println("Using 1024 bit RSA private key");
-// #endif
-//     rc = matrixSslLoadRsaKeysMem(keys, RSA1024, sizeof(RSA1024),
-// 				 RSA1024KEY, sizeof(RSA1024KEY), CAstream, CAstreamLen);
-//   } else if (key_len == 2048) {
-// #ifdef LOGGING_DEBUG
-//     Serial.println("Using 2048 bit RSA private key");
-// #endif
-//     rc = matrixSslLoadRsaKeysMem(keys, RSA2048, sizeof(RSA2048),
-// 				 RSA2048KEY, sizeof(RSA2048KEY), CAstream, CAstreamLen);
-//   } else if (key_len == 4096) {
-// #ifdef LOGGING_DEBUG
-//     Serial.println("Using 4096 bit RSA private key");
-// #endif
-//     rc = matrixSslLoadRsaKeysMem(keys, RSA4096, sizeof(RSA4096),
-// 				 RSA4096KEY, sizeof(RSA4096KEY), CAstream, CAstreamLen);
-//   } else {
-//     rc = -1;
-//     psAssert((key_len == 1024) || (key_len == 2048) || (key_len == 4096));
-//   }
-
   if (rc < 0) {
     if (g_https_trace) _psTrace("No certificate material loaded.  Exiting");
     if (CAstream) {
@@ -86,6 +65,10 @@ int32 loadRsaKeys(uint32 key_len, sslKeys_t *keys,
 
 const char * g_host;
 const char * g_path;
+
+void httpsclientSetPath(const char * path) {
+  g_path = path;
+}
 
 int httpsclientSetup(const char * g_ip_str, const char * host,
 		     const char * path) {
@@ -157,16 +140,19 @@ int httpsclientSetup(const char * g_ip_str, const char * host,
   sessionFlag = SSL_FLAGS_TLS_1_2;
 }
 
-static int32 httpWriteRequest() {
+static int32 httpWriteRequest(uint32 msg_length, const char * message) {
   unsigned char   *buf;
-  int32		  available, requested;
+  int32	available, requested;
 
-  requested = strlen((char *)g_httpRequestHdr) + strlen(g_path) + 1;
+  requested = strlen((char *)g_httpRequestHdr) + strlen(g_path) + 1 + msg_length + 10;
   if ((available = matrixSslGetWritebuf(ssl, &buf, requested)) < 0) {
     return PS_MEM_FAIL;
   }
   requested = min(requested, available);
-  snprintf((char *)buf, requested, (char *)g_httpRequestHdr, g_path);
+  snprintf((char *)buf, requested, (char *)g_httpRequestHdr, g_path,
+	   msg_length, message);
+  if (g_https_trace) _psTrace((char*)buf);
+  
   if (matrixSslEncodeWritebuf(ssl, strlen((char *)buf)) < 0) {
     return PS_MEM_FAIL;
   }
@@ -295,12 +281,12 @@ static int32 TCPRead (int len) {
   do {
     while (client.available()) {
       c = client.read();
-      if (g_https_trace) {
-	if (bufferPosition == 0) Serial.println("TCP Receiving ...");
-	if ((c < 32) || (c > 126)) Serial.print('.');
-	else Serial.print(c);
-	if (bufferPosition % 80 == 0) Serial.println();
-      }
+      // if (g_https_trace) {
+      // 	if (bufferPosition == 0) Serial.println("TCP Receiving ...");
+      // 	if ((c < 32) || (c > 126)) Serial.print('.');
+      // 	else Serial.print(c);
+      // 	if (bufferPosition % 80 == 0) Serial.println();
+      // }
       lastRead = millis();
       if (c == -1) {
 	error = true;
@@ -332,7 +318,8 @@ static int32 TCPRead (int len) {
   return bufferPosition;
 }
 
-int httpsClientConnection(unsigned char * requestContent) {
+int httpsClientConnection(unsigned char * requestContent, uint32 msg_len,
+			  const char * message) {
   int32 rc, len, transferred;
   g_httpRequestHdr = requestContent;
 
@@ -371,7 +358,8 @@ int httpsClientConnection(unsigned char * requestContent) {
  WRITE_MORE:
   while ((len = matrixSslGetOutdata(ssl, &g_buf)) > 0) {
     transferred = client.write(g_buf, len);
-
+    client.flush();
+    
     if (transferred <= 0) {
       goto L_CLOSE_ERR;
     }
@@ -394,7 +382,7 @@ int httpsClientConnection(unsigned char * requestContent) {
       if (rc == MATRIXSSL_HANDSHAKE_COMPLETE) {
 	/* If we sent the Finished SSL message, initiate the HTTP req */
 	/* (This occurs on a resumption handshake) */
-	if (httpWriteRequest() < 0) {
+	if (httpWriteRequest(msg_len, message) < 0) {
 	  goto L_CLOSE_ERR;
 	}
 	goto WRITE_MORE;
@@ -460,7 +448,7 @@ int httpsClientConnection(unsigned char * requestContent) {
     }
 #else
     /* We got the Finished SSL message, initiate the HTTP req */
-    if (httpWriteRequest() < 0) {
+    if (httpWriteRequest(msg_len, message) < 0) {
       goto L_CLOSE_ERR;
     }
 #endif

@@ -15,5 +15,7 @@ extern const bool g_https_trace;
 
 int httpsclientSetup(const char * g_ip_str, const char * host,
 		     const char * path);
-int httpsClientConnection(unsigned char * requestContent);
+int httpsClientConnection(unsigned char * requestContent, uint32 msg_len,
+			  const char * msg);
 void httpsclientCleanUp();
+void httpsclientSetPath(const char * path);
