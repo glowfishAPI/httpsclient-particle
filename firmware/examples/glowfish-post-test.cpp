@@ -68,10 +68,10 @@ void loop() {
   httpsclientSetPath(se_endpoint);
   if ((rc = httpsClientConnection(httpRequestContent, bufsize, jsonBuf)) < 0) {
     // TODO: When massive FAIL
-#ifdef LOGGING_DEBUG
-    Serial.print("httpsClientConnection Returned ");
-    Serial.println(rc);
-#endif
+    if (g_https_trace) {
+      Serial.print("httpsClientConnection Returned ");
+      Serial.println(rc);
+    }
     httpsclientCleanUp();
     digitalWrite(anomalyLed, HIGH);
     delay(500);
