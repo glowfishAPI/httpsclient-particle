@@ -48,7 +48,7 @@ void loop() {
     Serial.println(freemem);
   }
   int32 rc;
-  if ((rc = httpsClientConnection(httpRequestContent) < 0)) {
+  if ((rc = httpsClientConnection(httpRequestContent, 0, NULL) < 0)) {
     // TODO: When massive FAIL
     httpsclientCleanUp();
     digitalWrite(anomalyLed, HIGH);
