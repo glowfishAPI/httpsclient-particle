@@ -4,7 +4,7 @@ devices prefer talking https. Securing communication to-and-from smaller
 footprint devices (like particle.io Photon etc.) and standard web servers doing
 interesting stuff with this data (glowfi.sh, thingspeak.com, etc) is the goal.
 There is a hard limitation you hit with https and that dictates that you have
-about 50kB of meemory allocated for it. This is particulary because of huge
+about 50kB of meemory allocated for it. This is because of huge
 Certificate chains that get shipped from https servers.
 
 In all this, lack of a readily available plug and play httpsclient brings us
@@ -22,7 +22,7 @@ Assuming you are comfortable using this library: https://github.com/spark/firmwa
 - Goto firmware/main/ of the spark firmware directory again. And build it (Again, instructions for this are at https://github.com/spark/firmware)
 
 # Current State
-What's here, is a semi-stable working httpsclient that can make requests from
+What's here is a semi-stable working httpsclient that can make requests from
 the particle photon board to webservers running https. The client
 implementation is simple, and as of now can handle 1 connection at any given
 time. Other features (for now) are:
@@ -31,7 +31,7 @@ time. Other features (for now) are:
 - TLS 1.2
 - RSA 2048bit key length
 - Slow is OK, but secure is a must!
-- Ramping this up to 4096bit key length is ought to be tested, and this may just
+- Ramping this up to 4096bit key length ought to be tested, and this may just
   consume a whole lot of memory (AGAIN, especially the server certificates).
   Writing the certificate chains to flash is an option.
 
