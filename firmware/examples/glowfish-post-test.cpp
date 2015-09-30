@@ -1,8 +1,9 @@
 #define GLOWFISH_IP_INT_TUPLE 130,211,173,55
 
-const bool g_https_trace = true;
 static int anomalyLed = D7;
 static int heartbeatLed = D7;
+
+const bool g_https_trace = true;  // This controls debug info print to Serial
 const char g_ip_str [] = "130.211.173.55";
 const char host [] = "api.glowfi.sh";
 const char ad_endpoint [] = "/v1/anomaly_detect/";
@@ -12,6 +13,7 @@ const int g_port = 443;
 static unsigned int freemem;
 bool g_https_complete;
 uint32 g_bytes_received;
+
 TCPClient client;
 
 #define GF_JSON_SIZE 300
@@ -25,6 +27,9 @@ unsigned char httpRequestContent[] = "POST %s HTTP/1.0\r\n"
   "Content-Length: %d\r\n\r\n%s";
 
 void setup() {
+  if (g_https_trace) {
+    Serial.begin(9600);
+  }
   pinMode(anomalyLed, OUTPUT);
   httpsclientSetup(g_ip_str, host, se_endpoint);
 }
@@ -36,6 +41,7 @@ void loop() {
   if (nextTime > t) return;
   StaticJsonBuffer<GF_JSON_SIZE> glowfishJson;
   JsonObject& top = glowfishJson.createObject();
+  top["device_id"] = (const char *) System.deviceID();
   JsonObject& data_set = top.createNestedObject("data_set");
   // TODO: I don't quite understand how much memory needs to get allocated
   //JsonObject& time = top.createNestedArray("time");
@@ -54,10 +60,10 @@ void loop() {
   }
   g_https_complete = false;
   g_bytes_received = 0;
-#ifdef LOGGING_DEBUG
-  Serial.print("free memory: ");
-  Serial.println(freemem);
-#endif
+  if (g_https_trace) {
+    Serial.print("free memory: ");
+    Serial.println(freemem);
+  }
   int rc;
   httpsclientSetPath(se_endpoint);
   if ((rc = httpsClientConnection(httpRequestContent, bufsize, jsonBuf)) < 0) {
