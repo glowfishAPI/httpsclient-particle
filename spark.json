@@ -2,6 +2,6 @@
     "name": "httpsclient-particle",
     "author": "Vamsi Vytla",
     "license": "GPL",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "A library that helps photon boards talk https to web servers"
 }
