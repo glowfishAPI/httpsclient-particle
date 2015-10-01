@@ -1,4 +1,11 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "matrixsslApi.h"
+#ifdef __cplusplus
+}
+#endif
+
 #include "application.h"
 #define HTTPS_COMPLETE 1
 #define HTTPS_ERROR -1
