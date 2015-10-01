@@ -1,12 +1,9 @@
+#include "application.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
 #include "matrixsslApi.h"
-#ifdef __cplusplus
-}
-#endif
 
-#include "application.h"
 #define HTTPS_COMPLETE 1
 #define HTTPS_ERROR -1
 #define ALLOW_ANON_CONNECTIONS 1
@@ -26,3 +23,6 @@ int httpsClientConnection(unsigned char * requestContent, uint32 msg_len,
 			  const char * msg);
 void httpsclientCleanUp();
 void httpsclientSetPath(const char * path);
+#ifdef __cplusplus
+}
+#endif
