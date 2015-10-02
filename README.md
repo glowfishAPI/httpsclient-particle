@@ -13,13 +13,16 @@ starting point.
 
 Any feedback (especially critical) and contributions are welcome!
 
-# Building it with spark firmware
+# Building it locally with spark firmware
 
 Assuming you are comfortable using this library: https://github.com/spark/firmware
 - Clone the httpsclient-particle
 - Copy the contents of the firmware directory into the above firmware/user/src/ directory of the spark firmware library.
 - Pick one of the files in the examples directory. And copy it into user/src directory.
-- Goto firmware/main/ of the spark firmware directory again. And build it (Again, instructions for this are at https://github.com/spark/firmware)
+- Modify the first line of the example to remove the path prefix (needed only for web IDE):  
+  ````#include "httpsclient-particle.h"````
+- Delete/relocate the examples folder (local build won't succeed if it's left there)
+- Goto firmware/main/ of the spark firmware directory again. And build it (Again, instructions for this are at https://github.com/spark/firmware) - don't forget `PLATFORM=photon`
 
 # Current State
 What's here is a semi-stable working httpsclient that can make requests from
