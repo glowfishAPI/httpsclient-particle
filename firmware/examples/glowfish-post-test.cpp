@@ -1,3 +1,5 @@
+#include "httpsclient-particle/httpsclient-particle.h"
+
 #define GLOWFISH_IP_INT_TUPLE 130,211,173,55
 
 static int anomalyLed = D7;
