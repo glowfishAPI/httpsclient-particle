@@ -1,3 +1,5 @@
+#include "httpsclient-particle/httpsclient-particle.h"
+
 #define TIMEAPI_IP_INT_TUPLE 54,243,60,28
 
 static int anomalyLed = D7;
