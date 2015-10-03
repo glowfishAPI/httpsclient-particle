@@ -6,7 +6,7 @@
 //           https://metrics.librato.com/s/public/cumm5prtk?duration=86400
 //           signal_extract is a simple glowfi.sh endpoint which despikes
 #include "httpsclient-particle/httpsclient-particle.h"
-#include "Sparkjson/Sparkjson.h"
+#include "SparkJson/SparkJson.h"
 
 #define GLOWFISH_IP_INT_TUPLE 130,211,173,55
 
