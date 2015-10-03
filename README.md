@@ -13,16 +13,29 @@ starting point.
 
 Any feedback (especially critical) and contributions are welcome!
 
+# Building it with Web IDE
+- Import the httpsclient-particle
+- Add it to the application you are currently working on
+- (Or) use one of the examples in the examples/ directory
+- If you are using timeapi-test, you should be able to compile and run it readily
+- If you are using glowfish-post-test, you will need the authentication credentials from glowfish to be able to make the post. Once you have them follow the instructions in the example file to carefully fill them in.
+
 # Building it locally with spark firmware
 
-Assuming you are comfortable using this library: https://github.com/spark/firmware
+Assuming you are comfortable using spark firmware library located: https://github.com/spark/firmware
 - Clone the httpsclient-particle
-- Copy the contents of the firmware directory into the above firmware/user/src/ directory of the spark firmware library.
-- Pick one of the files in the examples directory. And copy it into user/src directory.
-- Modify the first line of the example to remove the path prefix (needed only for web IDE):  
+- Copy the contents of the firmware directory into the firmware/user/src/
+directory of the spark firmware library.
+- Pick one of the files in the examples directory. And copy it into user/src
+directory.
+- Modify the first line of the example to remove the path prefix (needed only
+for web IDE):
   ````#include "httpsclient-particle.h"````
-- Delete/relocate the examples folder (local build won't succeed if it's left there)
-- Goto firmware/main/ of the spark firmware directory again. And build it (Again, instructions for this are at https://github.com/spark/firmware) - don't forget `PLATFORM=photon`
+- Delete/relocate the examples folder (local build won't succeed if it's left
+there)
+- Goto firmware/main/ of the spark firmware directory again. And build it
+(Again, instructions for this are at https://github.com/spark/firmware) -
+don't forget `PLATFORM=photon`
 
 # Current State
 What's here is a semi-stable working httpsclient that can make requests from

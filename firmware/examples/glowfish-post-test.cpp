@@ -1,4 +1,12 @@
+// Dependencies: httpsclient-particle, Sparkjson
+// Overview: Collect system information from the photon, post it to Glowfi.sh
+//           Specifically, data posted to signal_extract endpoint of glowfish
+//           glowfi.sh then posts it to librato for data visualization
+//           You can have a look at one of the photons posting here:
+//           https://metrics.librato.com/s/public/cumm5prtk?duration=86400
+//           signal_extract is a simple glowfi.sh endpoint which despikes
 #include "httpsclient-particle/httpsclient-particle.h"
+#include "Sparkjson/Sparkjson.h"
 
 #define GLOWFISH_IP_INT_TUPLE 130,211,173,55
 
@@ -19,7 +27,12 @@ uint32 g_bytes_received;
 TCPClient client;
 
 #define GF_JSON_SIZE 300
+
 // Replace XXXX...XXX with base64 encoding if your gf username:password
+// If you don't know how to generate the base64 encoding go here:
+//    http://www.tuxgraphics.org/toolbox/base64-javascript.html
+// CAUTION: Do NOT remove/replace the word Basic from the string above,
+//          it's part of http standard.
 unsigned char httpRequestContent[] = "POST %s HTTP/1.0\r\n"
   "User-Agent: MatrixSSL/" MATRIXSSL_VERSION "\r\n"
   "Authorization: Basic XXXX...XXX\r\n"
@@ -53,7 +66,7 @@ void loop() {
   timeup.add(t/1000);
   char jsonBuf[GF_JSON_SIZE];
   size_t bufsize = top.printTo(jsonBuf, sizeof(jsonBuf));
-  
+
   g_connected = client.connect(g_ip, g_port);
   if (!g_connected) {
     client.stop();
@@ -75,6 +88,7 @@ void loop() {
       Serial.println(rc);
     }
     httpsclientCleanUp();
+    // Blink an LED twice to indicate trouble
     digitalWrite(anomalyLed, HIGH);
     delay(500);
     digitalWrite(anomalyLed, LOW);
@@ -84,6 +98,7 @@ void loop() {
     digitalWrite(anomalyLed, LOW);
     return;
   } else {
+    // Blink an LED once to indicate success
     digitalWrite(heartbeatLed, HIGH);
     delay(250);
     digitalWrite(heartbeatLed, LOW);
