@@ -1,7 +1,11 @@
+#pragma once
+
 #include "application.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 #include "matrixsslApi.h"
 
 #define HTTPS_COMPLETE 1
@@ -22,6 +26,7 @@ int httpsClientConnection(unsigned char * requestContent, uint32 msg_len,
 			  const char * msg);
 void httpsclientCleanUp();
 void httpsclientSetPath(const char * path);
+
 #ifdef __cplusplus
 }
 #endif
