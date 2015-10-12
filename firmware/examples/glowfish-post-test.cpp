@@ -1,15 +1,12 @@
-#define GLOWFISH_IP_INT_TUPLE 130,211,173,55
 
 static int anomalyLed = D7;
 static int heartbeatLed = D7;
 
 const bool g_https_trace = true;  // This controls debug info print to Serial
-const char g_ip_str [] = "130.211.173.55";
 const char host [] = "api.glowfi.sh";
 const char ad_endpoint [] = "/v1/anomaly_detect/";
 const char se_endpoint [] = "/v1/signal_extract/";
-static IPAddress g_ip = IPAddress(GLOWFISH_IP_INT_TUPLE);
-const int g_port = 443;
+const int g_port = 443; // Don't change this, unless you know what you are doing
 static unsigned int freemem;
 bool g_https_complete;
 uint32 g_bytes_received;
@@ -31,7 +28,7 @@ void setup() {
     Serial.begin(9600);
   }
   pinMode(anomalyLed, OUTPUT);
-  httpsclientSetup(g_ip_str, host, se_endpoint);
+  httpsclientSetup(host, se_endpoint);
 }
 
 unsigned int nextTime = 0;    // Next time to contact the server
@@ -52,7 +49,7 @@ void loop() {
   char jsonBuf[GF_JSON_SIZE];
   size_t bufsize = top.printTo(jsonBuf, sizeof(jsonBuf));
   
-  g_connected = client.connect(g_ip, g_port);
+  g_connected = client.connect(host, g_port);
   if (!g_connected) {
     client.stop();
     // If TCP Client can't connect to host, exit here.

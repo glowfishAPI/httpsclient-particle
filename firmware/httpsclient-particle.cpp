@@ -70,8 +70,7 @@ void httpsclientSetPath(const char * path) {
   g_path = path;
 }
 
-int httpsclientSetup(const char * g_ip_str, const char * host,
-		     const char * path) {
+int httpsclientSetup(const char * host, const char * path) {
   int rc;
   g_host = host;
   g_path = path;

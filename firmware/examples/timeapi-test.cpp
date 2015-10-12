@@ -1,14 +1,10 @@
-#define TIMEAPI_IP_INT_TUPLE 54,243,60,28
-
 static int anomalyLed = D7;
 static int heartbeatLed = D7;
 
 const bool g_https_trace = true;  // This controls debug info print to Serial
-const char g_ip_str [] = "54.243.60.28";
 const char host [] = "www.timeapi.org";
 const char endpoint [] = "/utc/now/";
-static IPAddress g_ip = IPAddress(TIMEAPI_IP_INT_TUPLE);
-const int g_port = 443;
+const int g_port = 443; // DoNOT change this unless you know what's up
 static unsigned int freemem;
 bool g_https_complete;
 uint32 g_bytes_received;
@@ -27,14 +23,14 @@ void setup() {
     Serial.begin(9600);
   }
   pinMode(anomalyLed, OUTPUT);
-  httpsclientSetup(g_ip_str, host, endpoint);
+  httpsclientSetup(host, endpoint);
 }
 
 unsigned int nextTime = 0;    // Next time to contact the server
 int g_connected;
 void loop() {
   if (nextTime > millis()) return;
-  g_connected = client.connect(g_ip, g_port);
+  g_connected = client.connect(host, g_port);
   if (!g_connected) {
     client.stop();
     // If TCP Client can't connect to host, exit here.
