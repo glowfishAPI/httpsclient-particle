@@ -61,13 +61,7 @@ void loop() {
   timeup.add(t/1000);
   char jsonBuf[GF_JSON_SIZE];
   size_t bufsize = top.printTo(jsonBuf, sizeof(jsonBuf));
-<<<<<<< HEAD
-  
   g_connected = client.connect(host, g_port);
-=======
-
-  g_connected = client.connect(g_ip, g_port);
->>>>>>> 623bff424f59cbeaf192117d493bbe0afcb9b531
   if (!g_connected) {
     client.stop();
     // If TCP Client can't connect to host, exit here.
