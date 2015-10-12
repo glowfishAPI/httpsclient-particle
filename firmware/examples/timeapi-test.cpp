@@ -1,3 +1,5 @@
+#include "httpsclient-particle/httpsclient-particle.h"
+
 static int anomalyLed = D7;
 static int heartbeatLed = D7;
 

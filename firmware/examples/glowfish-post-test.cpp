@@ -5,6 +5,7 @@
 //           You can have a look at one of the photons posting here:
 //           https://metrics.librato.com/s/public/cumm5prtk?duration=86400
 //           signal_extract is a simple glowfi.sh endpoint which despikes
+#include "httpsclient-particle/httpsclient-particle.h"
 
 static int anomalyLed = D7;
 static int heartbeatLed = D7;
