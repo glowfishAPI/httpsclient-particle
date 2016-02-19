@@ -34,7 +34,7 @@ uint32 g_cipher[1] = {60};
 const int g_ciphers = 1;
 // INFO: Turns out it's a huge deal to make this >= 3000.
 //       The TCPClient really does take >2000ms to give us a packet for some reason?!!
-const uint16_t TIMEOUT = 4000;
+const uint16_t TIMEOUT = 20000;
 unsigned char * g_httpRequestHdr;
 const char end_header[] = "\r\n\r\n";
 
