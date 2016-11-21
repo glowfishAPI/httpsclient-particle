@@ -70,6 +70,8 @@ void httpsclientSetPath(const char * path) {
   g_path = path;
 }
 
+void (*g_weatherCallback_func)(unsigned char*, int);
+
 int httpsclientSetup(const char * host, const char * path, void (*pFunc)(unsigned char*, int)) {
   int rc;
   g_host = host;
