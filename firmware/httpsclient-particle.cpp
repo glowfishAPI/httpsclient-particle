@@ -70,8 +70,7 @@ void httpsclientSetPath(const char * path) {
   g_path = path;
 }
 
-typedef void (*callback_function)(unsigned char*, int);
-int httpsclientSetup(const char * host, const char * path, callback_func pFunc) {
+int httpsclientSetup(const char * host, const char * path, void (*pFunc)(unsigned char*, int)) {
   int rc;
   g_host = host;
   g_path = path;
