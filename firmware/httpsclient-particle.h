@@ -1,3 +1,5 @@
+#ifndef HTTPSCLIENT_PARTICLE
+#define HTTPSCLIENT_PARTICLE
 #pragma once
 
 #include "application.h"
@@ -32,4 +34,5 @@ void httpsclientSetPath(const char * path);
 
 #ifdef __cplusplus
 }
+#endif
 #endif
