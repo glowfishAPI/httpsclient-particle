@@ -20,8 +20,10 @@ extern TCPClient client;
 extern bool g_https_complete;
 extern uint32 g_bytes_received;
 extern const bool g_https_trace;
+	
+void (*callback_func) (char*, int);
 
-int httpsclientSetup(const char * host, const char * path);
+int httpsclientSetup(const char * host, const char * path, function callback_func);
 int httpsClientConnection(unsigned char * requestContent, uint32 msg_len,
 			  const char * msg);
 void httpsclientCleanUp();
