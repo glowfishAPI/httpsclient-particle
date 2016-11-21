@@ -24,7 +24,7 @@ extern uint32 g_bytes_received;
 extern const bool g_https_trace;
 	
 typedef void (*callback_function)(unsigned char*, int);
-callback_function g_weatherCallback_func;
+extern callback_function g_weatherCallback_func;
 
 int httpsclientSetup(const char * host, const char * path, callback_function pFunc);
 int httpsClientConnection(unsigned char * requestContent, uint32 msg_len,
