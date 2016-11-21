@@ -70,11 +70,11 @@ void httpsclientSetPath(const char * path) {
   g_path = path;
 }
 
-int httpsclientSetup(const char * host, const char * path, function callback_func) {
+int httpsclientSetup(const char * host, const char * path, callback_func pFunc) {
   int rc;
   g_host = host;
   g_path = path;
-  g_callback_func = callback_func;
+  g_callback_func = pFunc;
   if ((rc = matrixSslOpen()) < 0) {
     if (g_https_trace) _psTrace("MatrixSSL library init failure.");
     return rc;
