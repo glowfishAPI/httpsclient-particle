@@ -17,7 +17,7 @@ unsigned char httpRequestContent[] = "GET %s HTTP/1.0\r\n"
   "User-Agent: MatrixSSL/" MATRIXSSL_VERSION "\r\n"
   "Host: www.timeapi.org\r\n"
   "Accept: */*\r\n"
-  "Content-Type: applcation/json\r\n"
+  "Content-Type: application/json\r\n"
   "Content-Length: %d\r\n\r\n%s";
 
 void setup() {
