@@ -70,10 +70,13 @@ void httpsclientSetPath(const char * path) {
   g_path = path;
 }
 
-int httpsclientSetup(const char * host, const char * path) {
+void (*g_weatherCallback_func)(unsigned char*, int);
+
+int httpsclientSetup(const char * host, const char * path, void (*pFunc)(unsigned char*, int)) {
   int rc;
   g_host = host;
   g_path = path;
+  g_weatherCallback_func = pFunc;
   if ((rc = matrixSslOpen()) < 0) {
     if (g_https_trace) _psTrace("MatrixSSL library init failure.");
     return rc;
@@ -455,6 +458,7 @@ int httpsClientConnection(unsigned char * requestContent, uint32 msg_len,
   case MATRIXSSL_APP_DATA:
   case MATRIXSSL_APP_DATA_COMPRESSED:
     g_bytes_received += len;
+    (*g_weatherCallback_func)(g_buf,len);
     if (g_https_trace) {
       for (int i = 0 ; i < len; i++) {
 	Serial.print((char)g_buf[i]);
